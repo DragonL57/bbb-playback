@@ -160,6 +160,7 @@ const storage = {
     return {
       captions: hasProperty(DATA, ID.CAPTIONS),
       chat: hasProperty(DATA, ID.CHAT),
+      mediaFiles: hasProperty(DATA, ID.MEDIA_FILES),
       notes: hasProperty(DATA, ID.NOTES),
       polls: hasProperty(DATA, ID.POLLS),
       videos: hasProperty(DATA, ID.VIDEOS),
@@ -191,6 +192,9 @@ const storage = {
   },
   get polls() {
     return DATA[ID.POLLS];
+  },
+  get mediaFiles() {
+    return DATA[ID.MEDIA_FILES];
   },
   get videos() {
     return DATA[ID.VIDEOS];

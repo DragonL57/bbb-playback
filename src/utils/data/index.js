@@ -6,6 +6,10 @@ import {
 } from 'utils/constants';
 import storage from 'utils/data/storage';
 import {
+  getCurrentMediaFile,
+  getMediaFileState,
+} from 'utils/data/mediaFiles';
+import {
   hasProperty,
   isCurrent,
   isEmpty,
@@ -205,7 +209,9 @@ export {
   getCurrentContent,
   getCurrentDataIndex,
   getCurrentDataInterval,
+  getCurrentMediaFile,
   getFileType,
+  getMediaFileState,
   getMessageType,
   getPercentage,
   getPollLabel,

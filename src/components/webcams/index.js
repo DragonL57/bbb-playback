@@ -112,6 +112,9 @@ const Webcams = () => {
         const recordId = storage.metadata.id;
 
         player.webcams.on('play', () => {
+          // A single tick on start and stop: components that follow the clock (the media file
+          // player, for one) only hear about the stop if the clock says so.
+          dispatchTimeUpdate(player.webcams.currentTime());
           if (interval.current) clearInterval(interval.current);
           const frequency = getFrequency();
           interval.current = setInterval(() => {
@@ -129,6 +132,7 @@ const Webcams = () => {
 
         player.webcams.on('pause', () => {
           clearInterval(interval.current);
+          dispatchTimeUpdate(player.webcams.currentTime());
           progress.save(recordId, player.webcams.currentTime());
         });
 

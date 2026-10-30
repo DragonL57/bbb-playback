@@ -4,6 +4,7 @@ import {
   getCurrentContent,
   getCurrentDataIndex,
   getCurrentDataInterval,
+  getCurrentMediaFile,
 } from 'utils/data';
 import storage from 'utils/data/storage';
 import { getLayoutSwap, isEqual } from 'utils/data/validators';
@@ -99,9 +100,30 @@ const useCurrentInterval = (data) => {
   return currentInterval;
 };
 
+// The media file entry active at the current time, or null. The same array entry is returned for
+// every tick inside one play, so setState bails out and the component does not re-render per frame.
+const useCurrentMediaFile = () => {
+  const [mediaFile, setMediaFile] = useState(null);
+
+  useEffect(() => {
+    const handleTimeUpdate = (event) => {
+      const nextMediaFile = getCurrentMediaFile(storage.mediaFiles, event.detail.time);
+      if (mediaFile !== nextMediaFile) setMediaFile(nextMediaFile);
+    };
+
+    document.addEventListener(EVENTS.TIME_UPDATE, handleTimeUpdate);
+    return () => {
+      document.removeEventListener(EVENTS.TIME_UPDATE, handleTimeUpdate);
+    };
+  }, [mediaFile]);
+
+  return mediaFile;
+};
+
 export {
   useCurrentContent,
   useCurrentIndex,
   useCurrentInterval,
+  useCurrentMediaFile,
   useLayoutSwap,
 };

@@ -5,6 +5,8 @@ $player-wrapper-padding: $control-bar-height;
 .player-wrapper {
   box-sizing: border-box;
   display: grid;
+  /* anchor for the media file overlay */
+  position: relative;
   grid-template-areas:
     "top-bar content"
     "media content"

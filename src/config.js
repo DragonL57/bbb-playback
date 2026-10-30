@@ -19,6 +19,7 @@ const files = {
   captions: 'captions.json',
   chat: 'slides_new.xml',
   cursor: 'cursor.xml',
+  mediaFiles: 'media_files.json',
   metadata: 'metadata.xml',
   notes: 'notes.html',
   panzooms: 'panzooms.xml',

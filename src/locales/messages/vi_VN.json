@@ -13,5 +13,7 @@
   "player.chat.message.poll.option.true": "Đúng",
   "player.chat.message.poll.option.false": "Sai",
   "player.screenshare.wrapper.aria": "Vùng chia sẻ màn hình",
-  "player.search.modal.title": "Tìm kiếm"
+  "player.search.modal.title": "Tìm kiếm",
+  "player.mediaFile.wrapper.aria": "Tệp đa phương tiện",
+  "player.mediaFile.audio": "Tệp âm thanh"
 }

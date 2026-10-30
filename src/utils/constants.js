@@ -33,6 +33,7 @@ const ID = {
   ERROR: 'error',
   LOADER: 'loader',
   MEDIA: 'media',
+  MEDIA_FILES: 'mediaFiles',
   MESSAGES: 'messages',
   METADATA: 'metadata',
   NOTES: 'notes',

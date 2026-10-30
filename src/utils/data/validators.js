@@ -213,4 +213,5 @@ export {
   wasCleared,
   getLayoutEvent,
   getLayoutSwap,
+  getMostRecentEvent,
 };

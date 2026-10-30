@@ -120,6 +120,34 @@ const buildVideos = result => {
   return data;
 };
 
+// One entry per play of a media file, so a file played twice appears twice. The updates trail carries
+// the position in the file at each change, which is the only way to place a pause or a seek.
+const buildMediaFiles = (result) => {
+  if (!Array.isArray(result)) return [];
+
+  return result
+    .filter(mediaFile => hasProperty(mediaFile, 'timestamp') && hasProperty(mediaFile, 'path'))
+    .map(mediaFile => {
+      return {
+        timestamp: parseFloat(mediaFile.timestamp),
+        stopTimestamp: parseFloat(mediaFile.stopTimestamp),
+        mediaFileId: mediaFile.mediaFileId,
+        filename: mediaFile.filename,
+        path: mediaFile.path,
+        duration: parseFloat(mediaFile.duration) || 0,
+        updates: (mediaFile.updates || []).map(update => {
+          return {
+            timestamp: parseFloat(update.timestamp),
+            time: parseFloat(update.time),
+            status: update.status,
+            rate: parseFloat(update.rate) || 1,
+          };
+        }),
+      };
+    })
+    .sort((a, b) => a.timestamp - b.timestamp);
+};
+
 const buildMetadata = result => {
   let data = {};
   const { recording } = result;
@@ -534,6 +562,9 @@ const build = (filename, value) => {
           break;
         case config.polls:
           data = buildPolls(value);
+          break;
+        case config.mediaFiles:
+          data = buildMediaFiles(value);
           break;
         case config.videos:
           data = buildVideos(value);

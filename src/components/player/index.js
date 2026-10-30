@@ -9,6 +9,7 @@ import Application from './application';
 import Content from './content';
 import Media from './media';
 import Modal from './modal';
+import MediaFile from 'components/media-file';
 import BottomBar from 'components/bars/bottom';
 import TopBar from 'components/bars/top';
 import {
@@ -110,6 +111,7 @@ const Player = () => {
         toggleFullscreen={() => setFullscreen(prevFullscreen => !prevFullscreen)}
         hidePresentation={hidePresentation}
       />
+      <MediaFile />
       <BottomBar />
       <Modal
         handleClose={() => setModal('')}
