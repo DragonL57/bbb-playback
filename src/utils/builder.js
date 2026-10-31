@@ -141,6 +141,8 @@ const buildMediaFiles = (result) => {
             time: parseFloat(update.time),
             status: update.status,
             rate: parseFloat(update.rate) || 1,
+            // 1 while the player was running, 0 when it stopped; older recordings have no field
+            state: (update.state === 0 || update.state === 1) ? Number(update.state) : undefined,
           };
         }),
       };
