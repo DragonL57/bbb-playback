@@ -28,7 +28,12 @@ const getMediaFileState = (mediaFile, time) => {
   if (!update) return state;
 
   const rate = update.rate > 0 ? update.rate : 1;
-  const playing = update.status === 'play';
+
+  // The recorded state says whether the player was running; the label alone is not enough, because a
+  // seek is recorded while the player keeps going and a pause can follow a seek at any position.
+  const playing = (update.state === 0 || update.state === 1)
+    ? update.state === 1
+    : update.status === 'play';
 
   let position = update.time > 0 ? update.time : 0;
   if (playing) position += (time - update.timestamp) * rate;

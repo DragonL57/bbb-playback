@@ -74,3 +74,36 @@ it('follows the updates trail to the position inside the media file', () => {
     .toEqual({ position: 0, playing: false, rate: 1 });
   expect(getMediaFileState(null, 5)).toEqual({ position: 0, playing: false, rate: 1 });
 });
+
+it('keeps playing through a seek, because the recorded state says so', () => {
+  const mediaFile = {
+    timestamp: 537,
+    stopTimestamp: 575,
+    duration: 30.53,
+    updates: [
+      { timestamp: 537, time: 0, status: 'play', rate: 1, state: 1 },
+      { timestamp: 553, time: 20, status: 'seek', rate: 1, state: 1 },
+      { timestamp: 564, time: 30.53, status: 'pause', rate: 1, state: 0 },
+    ],
+  };
+
+  // Before the seek the file runs from its start
+  expect(getMediaFileState(mediaFile, 550)).toEqual({ position: 13, playing: true, rate: 1 });
+
+  // The seek moves to its position and playback continues from there
+  expect(getMediaFileState(mediaFile, 553)).toEqual({ position: 20, playing: true, rate: 1 });
+  expect(getMediaFileState(mediaFile, 558)).toEqual({ position: 25, playing: true, rate: 1 });
+
+  // The pause stops it
+  expect(getMediaFileState(mediaFile, 570)).toEqual({ position: 30.53, playing: false, rate: 1 });
+});
+
+it('falls back to the status label when an older recording has no state', () => {
+  const mediaFile = {
+    timestamp: 3,
+    stopTimestamp: 10,
+    duration: 12,
+    updates: [{ timestamp: 3, time: 0, status: 'play', rate: 1 }],
+  };
+  expect(getMediaFileState(mediaFile, 5)).toEqual({ position: 2, playing: true, rate: 1 });
+});
